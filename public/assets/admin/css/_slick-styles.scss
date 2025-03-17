@@ -1,0 +1,43 @@
+.slick-slide {
+    outline: none;
+    @media screen and (max-width: 767px) {
+        margin-bottom: 48px;
+    }
+}
+.prevArrow,
+.nextArrow {
+    position: absolute;
+    display: flex;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: $gray-200;
+    border-radius: 38px;
+    border: none;
+    &:hover {
+        background-color: $gray-400;
+    }
+}
+.prevArrow {
+    right: -46px;
+}
+.nextArrow {
+    left: -46px;
+}
+@media screen and (max-width: 767px) {
+    .prevArrow,
+    .nextArrow {
+        top: inherit;
+        transform: translateY(0);
+        bottom: -48px;
+    }
+    .prevArrow {
+        right: calc(50% - 46px);
+    }
+    .nextArrow {
+        left: calc(50% - 46px);
+    }
+}

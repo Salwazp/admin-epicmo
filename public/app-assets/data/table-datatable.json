@@ -1,0 +1,25 @@
+{
+  "data" : [
+    {
+      "nama" : "Jhondoe",
+      "waktu": "26 Oktober 2021",
+      "divisi" : "dokter",
+      "message" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae orci mi. Proin finibus, massa et hendrerit hendrerit, arcu nibh efficitur erat, eget tincidunt nunc est vel enim. Aliquam sit amet mi lectus. Vestibulum pretium iaculis metus at rhoncus. Vestibulum risus nulla, egestas et gravida et, feugiat ut metus.",
+      "status"  : "Terselesaikan"
+    },
+    {
+      "nama" : "Jhondoe",
+      "waktu": "26 Oktober 2021",
+      "divisi" : "keamanan",
+      "message" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae orci mi. Proin finibus, massa et hendrerit hendrerit, arcu nibh efficitur erat, eget tincidunt nunc est vel enim. Aliquam sit amet mi lectus. Vestibulum pretium iaculis metus at rhoncus. Vestibulum risus nulla, egestas et gravida et, feugiat ut metus.",
+      "status"  : "Pending"
+    },
+    {
+      "nama" : "Jhondoe",
+      "waktu": "26 Oktober 2021",
+      "divisi" : "petugas",
+      "message" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae orci mi. Proin finibus, massa et hendrerit hendrerit, arcu nibh efficitur erat, eget tincidunt nunc est vel enim. Aliquam sit amet mi lectus. Vestibulum pretium iaculis metus at rhoncus. Vestibulum risus nulla, egestas et gravida et, feugiat ut metus.",
+      "status"  : "Ditolak"
+    }
+  ]
+}

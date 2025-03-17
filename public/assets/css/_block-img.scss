@@ -1,0 +1,12 @@
+// Block Image
+.block-img,
+.block-img-tall {
+    display: block;
+    width: 100%;
+    padding-top: 100%;
+    @include full-background();
+    background-color: $gray-200;
+}
+.block-img-tall {
+    padding-top: 140%;
+}

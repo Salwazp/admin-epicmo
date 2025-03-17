@@ -1,0 +1,80 @@
+//----- Custom Variable Bootstrap for Template #1 -----//
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+@mixin full-background(){
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+//----- Custom Template -----//
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+}
+
+// Border
+.border-thick {
+    border-width: 2rem!important;
+}
+
+// Button
+.btn {
+    font-weight: 500;
+    &.btn-lg {
+        border-radius: $border-radius!important;
+    }
+}
+
+// List Group Item
+.list-group-item {
+    color: $black;
+}
+
+// Pricing Section
+.gallery-section, .pricing-section {
+    &.bg-dark {
+        background-color: $dark;
+    }
+    &.bg-primary {
+        background-color: $primary;
+    }
+    &.bg-dark, &.bg-primary {
+        h2 {
+            color: $white;
+        }
+    }
+}
+
+// Block Image
+@import "block-img.scss";
+
+// Background
+@import "background.scss";
+
+// Font & Text
+@import "font-text.scss";
+
+// Section
+@import "section.scss";
+
+// Custom Diplay Flex
+@import "custom-dflex.scss";
+
+// Navigation
+@import "navigation.scss";
+
+// Photo Gallery
+@import "photo-gallery.scss";
+
+// User Avatar
+@import "user-avatar.scss";
+
+// Slick Styles
+@import "slick-styles.scss";
+
+// Toggle Menu
+@import "toggle-menu.scss";
+
+// Mobile
+@import "mobile.scss";

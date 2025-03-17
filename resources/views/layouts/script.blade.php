@@ -1,0 +1,1 @@
+<script data-host="https://alcb.sobatteknologi.com" data-dnt="false" src="/assets/script.js" id="ZwSg9rf6GA" async defer></script>
