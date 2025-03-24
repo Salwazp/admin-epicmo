@@ -23,11 +23,16 @@
         <section id="ajax-datatable">
             <div class="row">
                 <div class="col-12">
+                    
+                    
                     <div class="card">
+                        
+                        
                         <div class="card-header border-bottom">
                             <h4 class="card-title">Clients</h4>
                             <a href="{{ route('admin.running_image.create') }}" class="btn btn-primary">Add Data</a>
                         </div>
+                        
                         <div class="card-datatable">
                             <table class="table" id="data-notif">
                                 <thead>
@@ -209,5 +214,7 @@
             });
         </script>
     @endif
+
+    
 
 @endsection

@@ -112,6 +112,55 @@
                                     <label for="">Meta Description</label>
                                     <textarea name="meta_deskripsi" id="text_id" cols="30" rows="10" class="form-control">{{ isset($data->value['meta_deskripsi']) ? $data->value['meta_deskripsi'] : ''  }}</textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label for="">Instagram</label>
+                                    <input type="text" name="instagram" class="form-control @error('instagram') border-danger @enderror" value="{{ isset($data->value['instagram']) ? $data->value['instagram'] : ''  }}">
+                                    @error('instagram')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Tiktok</label>
+                                    <input type="text" name="tiktok" class="form-control @error('tiktok') border-danger @enderror" value="{{ isset($data->value['tiktok']) ? $data->value['tiktok'] : ''  }}">
+                                    @error('tiktok')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Facebook</label>
+                                    <input type="text" name="facebook" class="form-control @error('facebook') border-danger @enderror" value="{{ isset($data->value['facebook']) ? $data->value['facebook'] : ''  }}">
+                                    @error('facebook')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Privacy Policy</label>
+                                    <input type="text" name="privacy_policy" class="form-control @error('privacy_policy') border-danger @enderror" value="{{ isset($data->value['privacy_policy']) ? $data->value['privacy_policy'] : ''  }}">
+                                    @error('privacy_policy')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Terms of Service</label>
+                                    <input type="text" name="terms_of_service" class="form-control @error('terms_of_service') border-danger @enderror" value="{{ isset($data->value['terms_of_service']) ? $data->value['terms_of_service'] : ''  }}">
+                                    @error('terms_of_service')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Google Analytics</label>
+                                    <input type="text" name="google_analytics" class="form-control @error('google_analytics') border-danger @enderror" value="{{ isset($data->value['google_analytics']) ? $data->value['google_analytics'] : ''  }}">
+                                    @error('google_analytics')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Script Meta</label>
+                                    <input type="text" name="script_meta" class="form-control @error('script_meta') border-danger @enderror" value="{{ isset($data->value['script_meta']) ? $data->value['script_meta'] : ''  }}">
+                                    @error('script_meta')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -239,5 +288,7 @@
         });
     </script>
     @endif
+
+    
 
 @endsection

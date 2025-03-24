@@ -18,6 +18,7 @@ class RunningImageController extends Controller
     }
     public function index()
     {
+        $runningimage = RunningImage::latest()->get(); 
         if (request()->ajax()) {
             $data = RunningImage::latest()->get();
             return DataTables::of($data)
@@ -34,23 +35,30 @@ class RunningImageController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'image'     => 'required|mimes:png,jpg,jpeg|max:1500'
-        ]);
+{
+    
+    $request->validate([
+        'image' => 'required|mimes:png,jpg,jpeg|max:1500'
+    ]);
 
-        if ($request->file('image')) {
-            $image = $this->upload->save($request->file('image'));
-        } else {
-            $image = null;
-        }
-
-        RunningImage::create([
-            'image'     => $image
-        ]);
-
-        return redirect()->route('admin.running_image.index')->with(['create' => 'create']);
+    if ($request->file('image')) {
+        $image = $this->upload->save($request->file('image'));
+    } else {
+        $image = null;
     }
+    dd($runningImage);
+    $runningImage = RunningImage::create([
+        'image' => $image
+    ]);
+    
+
+    return response()->json([
+        'success' => true,
+        'data' => $runningImage
+    ]);
+    
+}
+
 
     public function edit(RunningImage $runningImage)
     {

@@ -11,7 +11,12 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\Admin\AboutController as AboutAdmin;
 use App\Http\Controllers\Admin\CareerController as CareerAdmin;
+use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\MomentController;
+use App\Http\Controllers\Admin\MomentButtonController;
+use App\Http\Controllers\Admin\MediaYoutubeController;
 use App\Http\Controllers\Admin\RunningImageController;
+use App\Http\Controllers\Admin\TitleRunningImageController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\GalleryImageController;
 use App\Http\Controllers\Admin\WhyController;
@@ -80,6 +85,14 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin' ,
             Route::post('/update/{running_image}', [RunningImageController::class, 'update'])->name('update');
             Route::get('/delete/{running_image}', [RunningImageController::class, 'delete'])->name('delete');
         });
+        Route::group(['prefix' => 'title_running_image', 'as' => 'title_running_image.'], function() {
+            Route::get('/', [TitleRunningImageController::class, 'index'])->name('index');
+            Route::get('/create', [TitleRunningImageController::class, 'create'])->name('create');
+            Route::post('/store', [TitleRunningImageController::class, 'store'])->name('store');
+            Route::get('/edit/{running_image}', [TitleRunningImageController::class, 'edit'])->name('edit');
+            Route::post('/update/{running_image}', [TitleRunningImageController::class, 'update'])->name('update');
+            Route::get('/delete/{running_image}', [TitleRunningImageController::class, 'delete'])->name('delete');
+        });
 
 
         Route::group(['prefix' => 'gallery', 'as' => 'gallery.'], function() {
@@ -109,6 +122,42 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin' ,
             Route::get('/edit/{career}', [CareerAdmin::class, 'edit'])->name('edit');
             Route::post('/update/{career}', [CareerAdmin::class, 'update'])->name('update');
             Route::get('/delete/{career}', [CareerAdmin::class, 'delete'])->name('delete');
+        });
+
+        Route::group(['prefix' => 'media', 'as' => 'media.'], function() {
+            Route::get('/', [MediaController::class, 'index'])->name('index');
+            Route::get('/create', [MediaController::class, 'create'])->name('create');
+            Route::post('/store', [MediaController::class, 'store'])->name('store');
+            Route::get('/edit/{media}', [MediaController::class, 'edit'])->name('edit');
+            Route::post('/update/{media}', [MediaController::class, 'update'])->name('update');
+            Route::get('/delete/{media}', [MediaController::class, 'delete'])->name('delete');
+        });
+
+        Route::group(['prefix' => 'media_youtube', 'as' => 'media_youtube.'], function() {
+            Route::get('/', [MediaYoutubeController::class, 'index'])->name('index');
+            Route::get('/create', [MediaYoutubeController::class, 'create'])->name('create');
+            Route::post('/store', [MediaYoutubeController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [MediaYoutubeController::class, 'edit'])->name('edit');
+            Route::post('/update/{id}', [MediaYoutubeController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [MediaYoutubeController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::group(['prefix' => 'moment', 'as' => 'moment.'], function() {
+            Route::get('/', [MomentController::class, 'index'])->name('index');
+            Route::get('/create', [MomentController::class, 'create'])->name('create');
+            Route::post('/store', [MomentController::class, 'store'])->name('store');
+            Route::get('/edit/{moment}', [MomentController::class, 'edit'])->name('edit');
+            Route::post('/update/{moment}', [MomentController::class, 'update'])->name('update');
+            Route::delete('/delete/{moment}', [MomentController::class, 'delete'])->name('delete');
+        });
+
+        Route::group(['prefix' => 'button_moment', 'as' => 'button_moment.'], function() {
+            Route::get('/', [MomentButtonController::class, 'index'])->name('index');
+            Route::get('/create', [MomentButtonController::class, 'create'])->name('create');
+            Route::post('/store', [MomentButtonController::class, 'store'])->name('store');
+            Route::get('/edit/{moment}', [MomentButtonController::class, 'edit'])->name('edit');
+            Route::post('/update/{moment}', [MomentButtonController::class, 'update'])->name('update');
+            Route::delete('/delete/{moment}', [MomentButtonController::class, 'delete'])->name('delete');
         });
 
         Route::group(['prefix' => 'contact', 'as' => 'contact.'], function() {

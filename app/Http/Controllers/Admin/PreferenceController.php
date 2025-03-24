@@ -50,9 +50,16 @@ class PreferenceController extends Controller
                 'logo'              => $logo,
                 'favicon'           => $favicon,
                 'meta_title'        => $request->meta_title,
-                'meta_deskripsi'    => $request->meta_deskripsi
+                'meta_deskripsi'    => $request->meta_deskripsi,
+                'instagram'         => $request->instagram,
+                'tiktok'            => $request->tiktok,
+                'facebook'          => $request->facebook,
+                'privacy_policy'    => $request->privacy_policy,
+                'terms_of_service'  => $request->terms_of_service,
+                'google_analytics'  => $request->google_analytics, 
+                'script_meta'       => $request->script_meta, 
             ]
-        ]);
+        ]);        
 
         return redirect()->back()->with(['create' => 'create']);
     }
@@ -85,9 +92,16 @@ class PreferenceController extends Controller
                 'logo'              => $logo,
                 'favicon'           => $favicon,
                 'meta_title'        => $request->meta_title,
-                'meta_deskripsi'    => $request->meta_deskripsi
+                'meta_deskripsi'    => $request->meta_deskripsi,
+                'instagram'         => $request->instagram ?? ($preference->value['instagram'] ?? ''),
+                'tiktok'            => $request->tiktok ?? ($preference->value['tiktok'] ?? ''),
+                'facebook'          => $request->facebook ?? ($preference->value['facebook'] ?? ''),
+                'privacy_policy'    => $request->privacy_policy ?? ($preference->value['privacy_policy'] ?? ''),
+                'terms_of_service'  => $request->terms_of_service ?? ($preference->value['terms_of_service'] ?? ''),
+                'google_analytics'  => $request->google_analytics ?? ($preference->value['google_analytics'] ?? ''),
+                'script_meta'       => $request->script_meta ?? ($preference->value['script_meta'] ?? ''),
             ]
-        ]);
+        ]);        
 
         return redirect()->back()->with(['update' => 'update']);
     }

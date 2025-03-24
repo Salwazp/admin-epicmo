@@ -35,12 +35,6 @@
                             <span class="menu-title text-truncate" data-i18n="About-Section">About</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ request()->routeIs('admin.running_image.*') ? 'active' : '' }}">
-                        <a class="d-flex align-items-center" href="{{ route('admin.running_image.index') }}">
-                            <i data-feather='circle'></i>
-                            <span class="menu-title text-truncate" data-i18n="Clients">Clients</span>
-                        </a>
-                    </li>
                     <li class="nav-item {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}">
                         <a class="d-flex align-items-center" href="{{ route('admin.gallery.index') }}">
                             <i data-feather='circle'></i>
@@ -60,6 +54,56 @@
                     <i data-feather='book-open'></i>
                     <span class="menu-title text-truncate" data-i18n="About">About</span>
                 </a>
+            </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='image'></i><span class="menu-title text-truncate" data-i18n="Invoice">Media</span></a>
+                <ul class="menu-content">
+                    <li class="nav-item {{ request()->routeIs('admin.media.*') ? 'active' : '' }}">
+                        <a class="d-flex align-items-center" href="{{ route('admin.media.index') }}">
+                            <i data-feather='circle'></i>
+                            <span class="menu-title text-truncate" data-i18n="Banner">Media Title</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->routeIs('admin.media_youtube.*') ? 'active' : '' }}">
+                        <a class="d-flex align-items-center" href="{{ route('admin.media_youtube.index') }}">
+                            <i data-feather='circle'></i>
+                            <span class="menu-title text-truncate" data-i18n="About-Section">Media Youtube</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='camera'></i><span class="menu-title text-truncate" data-i18n="Invoice">Moment</span></a>
+                <ul class="menu-content">
+                    <li class="nav-item {{ request()->routeIs('admin.moment.*') ? 'active' : '' }}">
+                        <a class="d-flex align-items-center" href="{{ route('admin.moment.index') }}">
+                            <i data-feather='circle'></i>
+                            <span class="menu-title text-truncate" data-i18n="Banner">Title</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->routeIs('admin.moment.button') ? 'active' : '' }}">
+                        <a class="d-flex align-items-center" href="{{ route('admin.button_moment.index') }}">
+                            <i data-feather='circle'></i>
+                            <span class="menu-title text-truncate" data-i18n="Banner">Button</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='play-circle'></i><span class="menu-title text-truncate" data-i18n="Invoice">Running Image</span></a>
+                <ul class="menu-content">
+                    <li class="nav-item {{ request()->routeIs('admin.running_image.*') ? 'active' : '' }}">
+                        <a class="d-flex align-items-center" href="{{ route('admin.running_image.index') }}">
+                            <i data-feather='circle'></i>
+                            <span class="menu-title text-truncate" data-i18n="Clients">Clients</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->routeIs('admin.title_running_image.*') ? 'active' : '' }}">
+                        <a class="d-flex align-items-center" href="{{ route('admin.title_running_image.index') }}">
+                            <i data-feather='circle'></i>
+                            <span class="menu-title text-truncate" data-i18n="Banner">Title Client</span>
+                        </a>
+                    </li>
+                    
+                </ul>
             </li>
             <li class="nav-item {{ request()->routeIs('admin.contact.*') && Request::segment(3) != 'form'  ? 'active' : '' }}">
                 <a class="d-flex align-items-center" href="{{ route('admin.contact.index') }}">
