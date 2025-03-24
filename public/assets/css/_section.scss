@@ -1,0 +1,29 @@
+// Section
+.section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    display: block;
+    position: relative;
+}
+.section-lg {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+    display: block;
+    position: relative;
+}
+.section-xlg {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+    display: block;
+    position: relative;
+}
+
+// Section Offset Nav
+.section-offset-nav {
+    margin-top: -72px;
+    padding-top: 8rem!important;
+}
+.section-have-cover {
+    position: relative;
+    z-index: 99;
+}

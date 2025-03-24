@@ -1,0 +1,27 @@
+// Text
+.text-faded {
+    opacity: .5;
+}
+.text-lg {
+    font-size: 3rem;
+    line-height: 1.2;
+    @media screen and (max-width: 991px) {
+        font-size: 2rem;
+    }
+}
+.text-xlg {
+    font-size: 4rem;
+    line-height: 1.2;
+    @media screen and (max-width: 991px) {
+        font-size: 3rem;
+    }
+}
+.font-thin {
+    font-weight: 300;
+}
+.font-regular {
+    font-weight: 400;
+}
+.font-weight-bold {
+    font-weight: 500!important;
+}
