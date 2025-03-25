@@ -37,7 +37,7 @@
                     <td>{{ $key + 1 }}</td>
                     <td>
                         @if($moment->image)
-                            <img src="{{ asset('storage/' . $moment->image) }}" width="100" alt="Moment Image">
+                            <img src="{{ $moment->image }}" width="100" alt="Moment Image">
                         @else
                             No Image
                         @endif

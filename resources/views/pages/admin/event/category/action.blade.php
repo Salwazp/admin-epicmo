@@ -11,13 +11,14 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Home</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="{{ route('admin.banner.index') }}">Banner</a>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.event.index') }}">Event</a>
                             </li>
+                            <li class="breadcrumb-item active">Category</li>
                             <li class="breadcrumb-item active">
                                 @if ($data == null)
-                                    Create Banner
+                                    Create Event Category
                                 @else
-                                    Update Banner: {{ $data->title }}
+                                    Update Event Category: {{ $data->title }}
                                 @endif
                             </li>
                         </ol>
@@ -30,9 +31,9 @@
         <!-- Validation -->
         <section class="bs-validation">
             @if ($data !== null)
-                <form action="{{ route('admin.banner.update', $data->id) }}" method="POST" enctype="multipart/form-data" id="banner-form">
+                <form action="{{ route('admin.event.category.update', $data->id) }}" method="POST" enctype="multipart/form-data" id="event-category-form">
             @else
-                <form action="{{ route('admin.banner.store') }}" method="POST" enctype="multipart/form-data" id="banner-form">
+                <form action="{{ route('admin.event.category.store') }}" method="POST" enctype="multipart/form-data" id="event-category-form">
             @endif
             @csrf
             <div class="row">
@@ -42,9 +43,9 @@
                         <div class="card-header">
                             <h4 class="card-title">
                                 @if ($data == null)
-                                    Create Banner
+                                    Create Event Category
                                 @else
-                                    Update Banner
+                                    Update Event Category
                                 @endif
                             </h4>
                         </div>
@@ -96,15 +97,6 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="highlight_text">Highlight Text</label>
-                                <input type="text" id="highlight_text" name="highlight_text"
-                                    class="form-control @error('highlight_text') border-danger @enderror"
-                                    value="{{ $data ? $data->highlight_text : '' }}">
-                                @error('highlight_text')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="form-group">
                                 <label for="text_id">Description</label>
                                 <textarea name="description" id="text_id" cols="30" rows="10" class="form-control">{{ $data ? $data->description : '' }}</textarea>
                                 @error('description')
@@ -113,63 +105,38 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Buttons</label>
-                                <input type="hidden" name="buttons" id="buttonsJsonInput">
-
+                                <label>Button</label>
                                 <div class="card p-2 mb-2">
-                                    <h6 class="mb-1">Button 1</h6>
                                     <div class="row">
-                                        <div class="col-md-4 mb-1">
-                                            <label for="button1_text">Button Text</label>
-                                            <input type="text" class="form-control"
-                                                id="button1_text"
-                                                placeholder="e.g. Pesan Sekarang!">
+                                        <div class="col-md-5 mb-1">
+                                            <label for="button_text">Button Text</label>
+                                            <input type="text" name="button_text" id="button_text" class="form-control" 
+                                                placeholder="e.g. Pesan Sekarang!" 
+                                                value="{{ $data && isset($data->button_text) ? $data->button_text : '' }}">
+                                            @error('button_text')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
-                                        <div class="col-md-4 mb-1">
-                                            <label for="button1_link">Button Link</label>
-                                            <input type="text" class="form-control"
-                                                id="button1_link"
-                                                placeholder="e.g. https://wa.me/your-number">
+                                        <div class="col-md-5 mb-1">
+                                            <label for="button_link">Button Link</label>
+                                            <input type="text" name="button_link" id="button_link" class="form-control" 
+                                                placeholder="e.g. https://wa.me/your-number"
+                                                value="{{ $data && isset($data->button_link) ? $data->button_link : '' }}">
+                                            @error('button_link')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
-                                        <div class="col-md-4 mb-1">
-                                            <label for="button1_style">Button Style</label>
-                                            <select class="form-control" id="button1_style">
-                                                <option value="primary">Primary</option>
-                                                <option value="outline">Outline</option>
-                                                <option value="secondary">Secondary</option>
-                                            </select>
+                                        <div class="col-md-2 mb-1">
+                                            <label for="display_order">Display Order</label>
+                                            <input type="number" name="display_order" id="display_order" class="form-control" 
+                                                placeholder="1" min="1"
+                                                value="{{ $data && isset($data->display_order) ? $data->display_order : '' }}">
+                                            @error('display_order')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="card p-2 mb-2">
-                                    <h6 class="mb-1">Button 2</h6>
-                                    <div class="row">
-                                        <div class="col-md-4 mb-1">
-                                            <label for="button2_text">Button Text</label>
-                                            <input type="text" class="form-control"
-                                                id="button2_text" placeholder="e.g. View Gallery">
-                                        </div>
-                                        <div class="col-md-4 mb-1">
-                                            <label for="button2_link">Button Link</label>
-                                            <input type="text" class="form-control"
-                                                id="button2_link"
-                                                placeholder="e.g. #gallery-section">
-                                        </div>
-                                        <div class="col-md-4 mb-1">
-                                            <label for="button2_style">Button Style</label>
-                                            <select class="form-control" id="button2_style">
-                                                <option value="primary">Primary</option>
-                                                <option value="outline" selected>Outline</option>
-                                                <option value="secondary">Secondary</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                @error('buttons')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </div>
                         </div>
                     </div>
@@ -197,49 +164,19 @@
             var textarea1 = document.getElementById('text_id');
             CKEDITOR.replace(textarea1, {
                 removePlugins: 'exportpdf',
-                extraAllowedContent: 'span()[]{};div()[]{};p()[]{};br()[]{};a()[]{*}',
-                disallowedContent: 'script; [on]'
+                extraAllowedContent: 'span(*)[*]{*};div(*)[*]{*};p(*)[*]{*};br(*)[*]{*};a(*)[*]{*}',
+                disallowedContent: 'script; *[on*]'
             });
 
-            let buttonsData = [];
-
-            @if ($data && isset($data->buttons))
-                try {
-                    buttonsData = {!! $data->buttons !!};
-                } catch (e) {
-                    console.error("Error parsing buttons JSON");
-                }
+            // Initialize button data if exists
+            @if ($data && isset($data->button_text) && isset($data->button_link))
+                $('#button_text').val('{{ $data->button_text }}');
+                $('#button_link').val('{{ $data->button_link }}');
             @endif
-
-            // Populate form fields with data
-            if (buttonsData.length > 0) {
-                $('#button1_text').val(buttonsData[0].text || '');
-                $('#button1_link').val(buttonsData[0].link || '');
-                $('#button1_style').val(buttonsData[0].style || 'primary');
-            }
-
-            if (buttonsData.length > 1) {
-                $('#button2_text').val(buttonsData[1].text || '');
-                $('#button2_link').val(buttonsData[1].link || '');
-                $('#button2_style').val(buttonsData[1].style || 'outline');
-            }
-
-            // Update hidden field on form submission
-            $('#banner-form').on('submit', function() {
-                const buttonsJson = JSON.stringify([{
-                        text: $('#button1_text').val(),
-                        link: $('#button1_link').val(),
-                        style: $('#button1_style').val()
-                    },
-                    {
-                        text: $('#button2_text').val(),
-                        link: $('#button2_link').val(),
-                        style: $('#button2_style').val()
-                    }
-                ]);
-
-                $('#buttonsJsonInput').val(buttonsJson);
-            });
+            
+            @if ($data && isset($data->display_order))
+                $('#display_order').val({{ $data->display_order }});
+            @endif
         });
     </script>
     <script>

@@ -10,11 +10,10 @@ class Why extends Model
     use HasFactory;
 
     protected $table = 'why_choose';
-
     protected $guarded = [];
 
     protected $casts = [
         'value' => 'array',
-        'image' => 'array',
     ];
 }
+

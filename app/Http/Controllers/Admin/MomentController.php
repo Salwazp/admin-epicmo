@@ -5,9 +5,17 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Models\Moment;
 use App\Http\Controllers\Controller;
+use App\Repository\UploadRepository;
 
 class MomentController extends Controller
 {
+    protected $upload;
+
+    public function __construct(UploadRepository $upload)
+    {
+        $this->upload = $upload;
+    }
+
     public function index()
     {
         $data = Moment::all();
@@ -16,31 +24,28 @@ class MomentController extends Controller
 
     public function create()
     {
-        return view('pages.admin.moment.action', ['data' => null]);    }
+        return view('pages.admin.moment.action', ['data' => null]);
+    }
 
-        public function store(Request $request)
-        {
-            $request->validate([
-                'title' => 'required|string|max:255',
-                'description' => 'required|string|max:255',
-                'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048', // Validasi gambar
-            ]);
-        
-            if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('uploads/moments', 'public'); // Simpan ke storage
-            } else {
-                $imagePath = null;
-            }
-        
-            Moment::create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'image' => $imagePath, // Simpan path gambar ke database
-            ]);
-        
-            return redirect()->route('admin.moment.index')->with('success', 'Moment created successfully.');
-        }
-        
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title'       => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'image'       => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+        ]);
+
+        // Simpan gambar ke Wasabi via UploadRepository
+        $imagePath = $request->hasFile('image') ? $this->upload->save($request->file('image')) : null;
+
+        Moment::create([
+            'title'       => $request->title,
+            'description' => $request->description,
+            'image'       => $imagePath,
+        ]);
+
+        return redirect()->route('admin.moment.index')->with('success', 'Moment created successfully.');
+    }
 
     public function edit($id)
     {
@@ -49,34 +54,30 @@ class MomentController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $data = Moment::findOrFail($id);
+    {
+        $data = Moment::findOrFail($id);
 
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'description' => 'required|string|max:255',
-        'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
-    ]);
+        $request->validate([
+            'title'       => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'image'       => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+        ]);
 
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('uploads/moments', 'public');
-    } else {
-        $imagePath = $data->image; // Jika tidak ada gambar baru, gunakan yang lama
+        // Simpan gambar baru jika ada
+        $imagePath = $request->hasFile('image') ? $this->upload->save($request->file('image')) : $data->image;
+
+        $data->update([
+            'title'       => $request->title,
+            'description' => $request->description,
+            'image'       => $imagePath,
+        ]);
+
+        return redirect()->route('admin.moment.index')->with('success', 'Moment updated successfully.');
     }
-
-    $data->update([
-        'title' => $request->title,
-        'description' => $request->description,
-        'image' => $imagePath,
-    ]);
-
-    return redirect()->route('admin.moment.index')->with('success', 'Moment updated successfully.');
-}
-
 
     public function destroy($id)
     {
         Moment::findOrFail($id)->delete();
-        return redirect()->route('pages.admin.moment.index')->with('success', 'Moment deleted successfully.');
+        return redirect()->route('admin.moment.index')->with('success', 'Moment deleted successfully.');
     }
 }

@@ -35,6 +35,8 @@
                                         <th></th>
                                         <th>No</th>
                                         <th>Title</th>
+                                        <th>Highlight Text</th>
+                                        <th>Description</th>
                                         <th>Image</th>
                                         <th>Action</th>
                                     </tr>
@@ -77,25 +79,46 @@
                     name: 'title'
                 },
                 {
-                    data    : 'image',
-                    render  : function (data , row ){
-                        return `<img src="${data}" width="100">`
+                    data: 'highlight_text',
+                    name: 'highlight_text'
+                },
+                {
+                    data: 'description',
+                    name: 'description',
+                    render: function(data) {
+                        // Limit description length to prevent table overflow
+                        return data.length > 50 ? data.substr(0, 50) + '...' : data;
+                    }
+                },
+                {
+                    data: 'image',
+                    name: 'image',
+                    render: function(data) {
+                        if (data) {
+                            return `<img src="${data}" width="100">`;
+                        } else {
+                            return "No Image";
+                        }
                     }
                 },
                 {
                     data: 'id',
-                    render: (id) => /* html */`
-                    <div class="btn-group">
-                        <button class="btn btn-flat-dark dropdown-toggle" type="button" id="dropdownMenuButton100" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="https://assets-vuexy.sobatteknologi.com/images/align-justify.svg">
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="/admin/banner/edit/${id}">Edit</a>
-                            <a class="dropdown-item" href="javascript:void(0);" onclick="return hapus(${id})">Delete</a>
-                            <a class="dropdown-item" href="/admin/banner/spesifikasi/${id}">Spesifikasi</a>
+                    name: 'action',
+                    orderable: false,
+                    searchable: false,
+                    render: function(id) {
+                        return `
+                        <div class="btn-group">
+                            <button class="btn btn-flat-dark dropdown-toggle" type="button" id="dropdownMenuButton${id}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="https://assets-vuexy.sobatteknologi.com/images/align-justify.svg">
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton${id}">
+                                <a class="dropdown-item" href="/admin/banner/edit/${id}">Edit</a>
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="return hapus(${id})">Delete</a>
+                            </div>
                         </div>
-                    </div>
-                    `
+                        `;
+                    }
                 },
                 ],
                 columnDefs: [
@@ -113,7 +136,7 @@
                         display: $.fn.dataTable.Responsive.display.modal({
                             header: function (row) {
                                 var data = row.data();
-                                return 'Details of ' + data['full_name'];
+                                return 'Details of Banner: ' + data['title'];
                             }
                         }),
                         type: 'column',
@@ -124,15 +147,9 @@
                 },
                 language: {
                     paginate: {
-                        // remove previous & next text from pagination
                         previous: '&nbsp;',
                         next: '&nbsp;'
                     }
-                },
-                drawCallback: () => {
-                    $('.delete').click(function () {
-                        const id = $(this).data(id)
-                    })
                 }
             });
         });
@@ -140,15 +157,15 @@
         function hapus(id){
             var table = $('#data-notif').DataTable();
             clearToastObj = toastr['error'](
-                'Are You Delete?<br /><br /><button type="button" class="btn btn-danger btn-sm delete">Yes</button>',
-                'Deleted',
+                'Are You Sure You Want To Delete?<br /><br /><button type="button" class="btn btn-danger btn-sm delete">Yes</button>',
+                'Confirmation',
                 {
                     closeButton: true,
                     timeOut: 0,
                     extendedTimeOut: 0,
                     tapToDismiss: false,
                 }
-                );
+            );
 
             if (clearToastObj.find('.delete').length) {
                 clearToastObj.delegate('.delete', 'click', function () {
@@ -166,11 +183,10 @@
                             table.ajax.reload();
                         },
                         error: function (data) {
-                            toastr['success']('👋 Chocolate oat cake jelly oat cake candy jelly beans pastry.', 'Progress Bar', {
+                            toastr['error']('Something went wrong. Please try again.', 'Error', {
                                 closeButton: true,
                                 tapToDismiss: false,
-                                progressBar: true,
-                                rtl: isRtl
+                                progressBar: true
                             });
                         }
                     });
@@ -178,25 +194,15 @@
             }
         }
     </script>
-    <script>
-        $(function (){
-            $('.hapus').on('click', function () {
-                var id = $(this).attr('data-id');
-                console.log(id);
-            });
-        });
-    </script>
     @if(Session::get('create'))
         <script type="text/javascript">
             $(document).ready(function(){
-
                 // Success Type
                 toastr['success']('Successfully Create Data.', 'Successfully', {
                     closeButton: true,
                     tapToDismiss: false,
                     progressBar: true,
                 });
-
             });
         </script>
     @endif
@@ -204,16 +210,13 @@
     @if(Session::get('update'))
         <script type="text/javascript">
             $(document).ready(function(){
-
                 // Success Type
                 toastr['success']('Successfully Update Data.', 'Successfully', {
                     closeButton: true,
                     tapToDismiss: false,
                     progressBar: true,
                 });
-
             });
         </script>
     @endif
-
 @endsection

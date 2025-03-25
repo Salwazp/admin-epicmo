@@ -71,29 +71,18 @@
     <div class="d-block mb-4 py-4 section-marquee">
         <div class="marquee">
             <ul class="marquee__content">
-                @forelse ($runningimage as $data)
-                    <li>
-                        <h5>{{ $data->title }}</h5> <!-- Menampilkan Title -->
-                        <img src="{{ $data->image }}" class="image-marquee" />
-                    </li>
-                @empty
-                    <li>No data available</li> <!-- Jika tidak ada data -->
-                @endforelse
+                @foreach ($runningimage as $data) 
+                <li><img src="{{ $data->image }}" class="image-marquee" /></li>
+                @endforeach
             </ul>
             <ul class="marquee__content">
-                @forelse ($runningimage as $data)
-                    <li>
-                        <h5>{{ $data->title }}</h5>
-                        <img src="{{ $data->image }}" class="image-marquee" />
-                    </li>
-                @empty
-                    <li>No data available</li>
-                @endforelse
+                @foreach ($runningimage as $data) 
+                <li><img src="{{ $data->image }}" class="image-marquee" /></li>
+                @endforeach
             </ul>
         </div>
     </div>
 </div>
-
 <!--Parallax End-->
 <!--Blog Start-->
 <section id="blog">

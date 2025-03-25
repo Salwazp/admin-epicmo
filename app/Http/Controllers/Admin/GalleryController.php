@@ -13,74 +13,75 @@ use App\Repository\UploadRepository;
 
 class GalleryController extends Controller
 {
-    protected $upload;
-
-    public function __construct(UploadRepository $upload) {
-        $this->upload = $upload;
-    }
-
-    public function index()
+    protected $upload;  
+    
+    public function index(Request $request)
     {
-        if (request()->ajax()){
-            $data = GalleryImage::get();
-            return DataTables::of($data)
-            ->make(true);
+        if (request()->ajax()) {
+            $tableType = $request->input('table_type', 'galleries');
+            
+            if ($tableType === 'galleries') {
+                $data = Gallery::latest()->get();
+            } else {
+                $data = GalleryImage::latest()->get();
+            }
+            
+            return DataTables::of($data)->make(true);
         }
-        $data = Gallery::orderby('id', 'DESC')->first();
-        return view('pages.admin.gallery.index', compact('data'));
+        
+        return view('pages.admin.gallery.index');
     }
-
+    
+    public function create()
+    {
+        $data = null;
+        return view('pages.admin.gallery.action', compact('data'));
+    }
+    
     public function store(Request $request)
     {
         $request->validate([
-            'title'         => 'required'
+            'title' => 'required',
+            'description' => 'required',
+            'highlight_text' => 'required',
         ]);
-        $text_highlight = [$request->text_highlight1, $request->text_highlight2];
-
-        if ($request->file('image')) {
-            $image = $this->upload->save($request->file('image'));
-        } else {
-            $image = null;
-        }
         
-
         Gallery::create([
-            'title'             => $request->title,
-            'subtitle'          => $request->subtitle,
-            'text_highlight'    => $text_highlight
-    ]);
-
-        return redirect()->back()->with(['create' => 'create']);
+            'title' => $request->title,
+            'description' => $request->description,
+            'highlight_text' => $request->highlight_text
+        ]);
+        
+        return redirect()->route('admin.gallery.index')->with(['create' => 'create']);
+    }
+    
+    public function edit(Gallery $gallery)
+    {
+        $data = $gallery;
+        return view('pages.admin.gallery.action', compact('data'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request, Gallery $gallery)
     {
         $request->validate([
-            'title'         => 'required'
+            'title'          => 'required',
+            'description'    => 'required',
+            'highlight_text' => 'required'
         ]);
-        $gallery = Gallery::first();
         
-        $text_highlight = [$request->text_highlight1, $request->text_highlight2];
-
-        if ($request->file('image')) {
-            $image = $this->upload->save($request->file('image'));
-        } else {
-            $image = $gallery->image;
-        }
-
         $gallery->update([
-            'title'             => $request->title,
-            'subtitle'          => $request->subtitle,
-            'text_highlight'    => $text_highlight
+            'title'          => $request->title,
+            'description'    => $request->description,
+            'highlight_text' => $request->highlight_text
         ]);
 
-        return redirect()->back()->with(['update' => 'update']);
+        return redirect()->route('admin.gallery.index')->with(['update' => 'update']);
     }
-
     
-
     public function delete(Gallery $gallery)
     {
         $gallery->delete();
+        
+        return response()->json(['success' => true]);
     }
 }

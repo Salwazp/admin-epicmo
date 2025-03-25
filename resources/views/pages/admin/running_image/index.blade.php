@@ -79,7 +79,7 @@
                 {
                     data    : 'image',
                     render  : function (data , row ){
-                        return `<img src="${data}" width="100">`
+                        return <img src="${data}" width="100">
                     }
                 },
                 {

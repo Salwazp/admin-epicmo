@@ -14,8 +14,8 @@ class UploadRepository implements UploadInterface
     public function save($image)
     {
         $name = $image->hashName();
-        Storage::disk('digitalocean')->put('alcb', $image, 'public');
-        return 'https://sobat.sgp1.cdn.digitaloceanspaces.com/alcb/'.$name;
+        Storage::disk('wasabi')->put('epicmo', $image, 'public');
+        return 'https://s3.ap-southeast-1.wasabisys.com/sobatstorage/epicmo/'.$name;
     }
 
     public function saveOriginalName($image)

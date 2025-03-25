@@ -11,14 +11,4 @@ class Banner extends Model
 
     protected $table = 'banner';
     protected $guarded = [];
-
-    public function spesifikasi()
-    {
-        return $this->hasMany(Spesifikasi::class);
-    }
-
-    public static function getBannerWithSpesifikasi()
-    {
-        return self::with('spesifikasi')->get();
-    }
 }

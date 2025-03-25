@@ -44,7 +44,7 @@
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>
                                                     @if($item->image)
-                                                        <img src="{{ asset('storage/' . $item->image) }}" width="100">
+                                                        <img src="{{ $item->image }}" width="100">
                                                     @else
                                                         No Image
                                                     @endif

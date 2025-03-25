@@ -41,12 +41,6 @@
                             <span class="menu-title text-truncate" data-i18n="About-Section">About</span>
                         </a>
                     </li>
-                    <li class="nav-item {{ request()->routeIs('admin.running_image.*') ? 'active' : '' }}">
-                        <a class="d-flex align-items-center" href="{{ route('admin.running_image.index') }}">
-                            <i data-feather='circle'></i>
-                            <span class="menu-title text-truncate" data-i18n="Clients">Clients</span>
-                        </a>
-                    </li>
                     <li class="nav-item {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}">
                         <a class="d-flex align-items-center" href="{{ route('admin.gallery.index') }}">
                             <i data-feather='circle'></i>
@@ -108,9 +102,14 @@
                             <span class="menu-title text-truncate" data-i18n="Banner">Title Client</span>
                         </a>
                     </li>
-                    
                 </ul>
-            </li>
+                <li class="nav-item {{ request()->routeIs('admin.preference.*') ? 'active' : '' }}">
+                    <a class="d-flex align-items-center" href="{{ route('admin.preference.index') }}">
+                        <i data-feather='settings'></i>
+                        <span class="menu-title text-truncate" data-i18n="Preference">Preference</span>
+                    </a>
+                </li>
+    </li>
         </ul>
     </div>
 </div>

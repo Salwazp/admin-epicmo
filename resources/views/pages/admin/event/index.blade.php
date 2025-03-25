@@ -9,7 +9,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#">Gallery</a>
+                        <li class="breadcrumb-item"><a href="#">Event</a>
                         </li>
                     </ol>
                 </div>
@@ -18,17 +18,17 @@
     </div>
 </div>
 <div class="content-body">
-    <!-- Galleries table -->
-    <section id="ajax-galleries-datatable">
+    <!-- Events table -->
+    <section id="ajax-events-datatable">
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header border-bottom">
-                        <h4 class="card-title">Galleries</h4>
-                        <a href="{{ route('admin.gallery.create') }}" class="btn btn-primary">Add Gallery</a>
+                        <h4 class="card-title">Event</h4>
+                        <a href="{{ route('admin.event.create') }}" class="btn btn-primary">Add Event</a>
                     </div>
                     <div class="card-datatable">
-                        <table class="table" id="data-galleries">
+                        <table class="table" id="data-events">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -46,23 +46,26 @@
         </div>
     </section>
     
-    <!-- Gallery Images table -->
-    <section id="ajax-gallery-images-datatable" class="mt-2">
+    <!-- Event Categories table -->
+    <section id="ajax-event-categories-datatable" class="mt-2">
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header border-bottom">
-                        <h4 class="card-title">Gallery Images</h4>
-                        <a href="{{ route('admin.gallery.image.create') }}" class="btn btn-primary">Add Image</a>
+                        <h4 class="card-title">Event Categories</h4>
+                        <a href="{{ route('admin.event.category.create') }}" class="btn btn-primary">Add Category</a>
                     </div>
                     <div class="card-datatable">
-                        <table class="table" id="data-gallery-images">
+                        <table class="table" id="data-event-categories">
                             <thead>
                                 <tr>
                                     <th></th>
                                     <th>No</th>
-                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Button Text</th>
                                     <th>Display Order</th>
+                                    <th>Image</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -84,14 +87,14 @@
             }
         });
 
-        // Galleries DataTable
-        var galleriesTable = $('#data-galleries').DataTable({
+        // Events DataTable
+        var eventsTable = $('#data-events').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('admin.gallery.index') }}",
+                url: "{{ route('admin.event.index') }}",
                 data: function(d) {
-                    d.table_type = 'galleries';
+                    d.table_type = 'events';
                 }
             },
             columns: [
@@ -131,8 +134,8 @@
                             <img src="https://assets-vuexy.sobatteknologi.com/images/align-justify.svg">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton${id}">
-                            <a class="dropdown-item" href="/admin/gallery/edit/${id}">Edit</a>
-                            <a class="dropdown-item" href="javascript:void(0);" onclick="return deleteGallery(${id})">Delete</a>
+                            <a class="dropdown-item" href="/admin/event/edit/${id}">Edit</a>
+                            <a class="dropdown-item" href="javascript:void(0);" onclick="return deleteEvent(${id})">Delete</a>
                         </div>
                     </div>
                     `;
@@ -154,7 +157,7 @@
                     display: $.fn.dataTable.Responsive.display.modal({
                         header: function (row) {
                             var data = row.data();
-                            return 'Details of Gallery: ' + data['title'];
+                            return 'Details of Event: ' + data['title'];
                         }
                     }),
                     type: 'column',
@@ -171,14 +174,14 @@
             }
         });
 
-        // Gallery Images DataTable
-        var imagesTable = $('#data-gallery-images').DataTable({
+        // Event Categories DataTable
+        var categoriesTable = $('#data-event-categories').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('admin.gallery.index') }}",
+                url: "{{ route('admin.event.index') }}",
                 data: function(d) {
-                    d.table_type = 'gallery_images';
+                    d.table_type = 'categories';
                 }
             },
             columns: [
@@ -191,15 +194,31 @@
                 render: function (data, type, row, meta) { return meta.row + meta.settings._iDisplayStart + 1; },
             },
             {
-                data: 'image',
-                name: 'image',
+                data: 'title',
+                name: 'title'
+            },
+            {
+                data: 'description',
+                name: 'description',
                 render: function(data) {
-                    return `<img src="${data}" width="100" class="img-thumbnail">`;
+                    // Limit description length to prevent table overflow
+                    return data.length > 50 ? data.substr(0, 50) + '...' : data;
                 }
+            },
+            {
+                data: 'button_text',
+                name: 'button_text'
             },
             {
                 data: 'display_order',
                 name: 'display_order'
+            },
+            {
+                data: 'image',
+                name: 'image',
+                render: function(data) {
+                    return data ? `<img src="${data}" width="100" alt="Moment Image">` : 'No Image';
+                }
             },
             {
                 data: 'id',
@@ -209,12 +228,12 @@
                 render: function(id) {
                     return `
                     <div class="btn-group">
-                        <button class="btn btn-flat-dark dropdown-toggle" type="button" id="dropdownImgButton${id}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-flat-dark dropdown-toggle" type="button" id="dropdownCatButton${id}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="https://assets-vuexy.sobatteknologi.com/images/align-justify.svg">
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownImgButton${id}">
-                            <a class="dropdown-item" href="/admin/gallery/image/edit/${id}">Edit</a>
-                            <a class="dropdown-item" href="javascript:void(0);" onclick="return deleteImage(${id})">Delete</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownCatButton${id}">
+                            <a class="dropdown-item" href="/admin/event/category/edit/${id}">Edit</a>
+                            <a class="dropdown-item" href="javascript:void(0);" onclick="return deleteCategory(${id})">Delete</a>
                         </div>
                     </div>
                     `;
@@ -236,7 +255,7 @@
                     display: $.fn.dataTable.Responsive.display.modal({
                         header: function (row) {
                             var data = row.data();
-                            return 'Details of Gallery Image';
+                            return 'Details of Event Category: ' + data['title'];
                         }
                     }),
                     type: 'column',
@@ -254,19 +273,19 @@
         });
     });
 
-    function deleteGallery(id){
-        var table = $('#data-galleries').DataTable();
-        showDeleteConfirmation(id, table, 'Gallery');
+    function deleteEvent(id){
+        var table = $('#data-events').DataTable();
+        showDeleteConfirmation(id, table, 'Event');
     }
 
-    function deleteImage(id){
-        var table = $('#data-gallery-images').DataTable();
-        showDeleteConfirmation(id, table, 'Image', true);
+    function deleteCategory(id){
+        var table = $('#data-event-categories').DataTable();
+        showDeleteConfirmation(id, table, 'Category', true);
     }
 
-    function showDeleteConfirmation(id, table, itemType, isImage = false) {
+    function showDeleteConfirmation(id, table, itemType, isCategory = false) {
         clearToastObj = toastr['error'](
-            Are You Sure You Want To Delete This ${itemType}?<br /><br /><button type="button" class="btn btn-danger btn-sm delete">Yes</button>,
+            `Are You Sure You Want To Delete This ${itemType}?<br /><br /><button type="button" class="btn btn-danger btn-sm delete">Yes</button>`,
             'Confirmation',
             {
                 closeButton: true,
@@ -281,16 +300,16 @@
                 toastr.clear(clearToastObj, { force: true });
                 clearToastObj = undefined;
                 
-                // Construct the correct URL based on whether it's an image or gallery
-                const deleteUrl = isImage 
-                    ? /admin/gallery/image/delete/${id}  // Specific URL for image deletion
-                    : /admin/gallery/delete/${id};       // URL for gallery deletion
+                // Construct the correct URL based on whether it's a category or not
+                const deleteUrl = isCategory 
+                    ? `/admin/event/category/delete/${id}`  // Specific URL for category deletion
+                    : `/admin/event/delete/${id}`;          // URL for event deletion
                 
                 $.ajax({
                     method: "GET",
                     url: deleteUrl,
                     success: function (data) {
-                        toastr['success'](Successfully Deleted ${itemType}., 'Success', {
+                        toastr['success'](`Successfully Deleted ${itemType}.`, 'Success', {
                             closeButton: true,
                             tapToDismiss: false,
                             progressBar: true,
@@ -298,7 +317,7 @@
                         table.ajax.reload();
                     },
                     error: function (data) {
-                        toastr['error'](Failed to delete ${itemType}. Please try again., 'Error', {
+                        toastr['error'](`Failed to delete ${itemType}. Please try again.`, 'Error', {
                             closeButton: true,
                             tapToDismiss: false,
                             progressBar: true

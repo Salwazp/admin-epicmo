@@ -62,6 +62,15 @@ return [
             'bucket' => env('DIGITALOCEAN_SPACES_BUCKET', 'sobat'),
         ],
 
+        'wasabi' => [
+            'driver' => 's3',
+            'key' => 'YZF1REO1GREGMW7DHR1X',
+            'secret' => '0wvl1rUFZrd7K0IWhwgsWaMXqIeR2RlKmBACbNwu',
+            'endpoint' => 'https://s3.ap-southeast-1.wasabisys.com',
+            'region' => 'ap-southeast-1',
+            'bucket' => 'sobatstorage',
+        ],
+
     ],
 
     /*
